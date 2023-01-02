@@ -1,0 +1,9 @@
+{% autoescape off %}
+Hi {{ user.user_name }},
+
+    You have recently registered an account in {{ domain }}.
+    If this was intentional please click the link bellow to activate your account, otherwise
+    ignore this email.
+
+http://{{ domain }}{% url 'account:activate' uidb64=uid token=token %}
+{% endautoescape %}

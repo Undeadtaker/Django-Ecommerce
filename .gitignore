@@ -1,0 +1,5 @@
+.idea
+keys
+nginx and gunicorn conf
+venv
+requirements.txt

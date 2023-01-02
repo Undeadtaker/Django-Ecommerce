@@ -1,0 +1,51 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %} User's wishlist {%endblock title%}
+
+{%block content%}
+<div class="container">
+  <div class="login d-flex align-items-center">
+    <div class="col-12 col-md-12 col-lg-12 mx-auto">
+
+      <div class="col-12 mx-auto" style="padding-top: 5rem">
+      <h1 class="h3">View and edit wishlist.</h1>
+      <div>Manage your <b>wishlist</b>.</div>
+      <hr />
+
+
+       {% if wishlist %}
+         {% for item in wishlist %}
+            <div class="card mb-3">
+              <div class="row g-0">
+                <div class="col-md-2">
+
+                  {% for image in item.product_image.all %}
+                    {% if image.is_feature %}
+                      <img src="{{image.image.url}}" class="img-fluid d-block p-2" alt="{{image.image.alt_text}}">
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="col-md-10">
+                  <div class="card-body">
+                    <h5 class="card-title">{{item.title}}</h5>
+                    <p class="card-text">{{item.description|truncatewords:20}}</p>
+                    <p class="card-text"><small class="text-muted">Last updated {{item.updated_at}}</small></p>
+                    <p class="card-text"><small class="text-muted">{{product.regular_price}}</small></p>
+                    <a type="button" class="btn btn-primary fw500 btn-sm" href="{% url 'account:add_to_wishlist' item.id %}">Remove from Wishlist</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+         {% endfor %}
+       {% else %}
+         <p>Your wishlist is empty.</p>
+       {% endif %}
+
+
+    </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

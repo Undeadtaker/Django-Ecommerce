@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from .models import Category, Product
+from .tasks import test_func
 
 def product_all(req):
     products = Product.objects.prefetch_related("product_image").filter(is_active=True)
@@ -37,25 +39,7 @@ def category_single(req, category_slug=None):
 
     return render(req, 'store/category.html', context)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Testing Celery
+def test_celery(req):
+    test_func.delay()
+    return HttpResponse('Done')

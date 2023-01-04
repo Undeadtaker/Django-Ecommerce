@@ -1,8 +1,7 @@
 # Django Ecommerce Web App
 ### Live demo https://www.starshop-demo.online
 
-![alt text](https://s3.amazonaws.com/fullstackfeed/images/django-2.jpg)
-
+![alt text](https://i.imgur.com/k80Eks9.png) 
 ## Features
 
 - Account creation (with email token confirmation)
@@ -35,5 +34,8 @@ therefore email will be used when logging in to your account.
 > This is an ongoing project. Something that I will constantly seek to improve. The default layout of the App
 > was created following a tutorial series from Very Academy https://www.youtube.com/@veryacademy . 
 > However, now I will seek to improve the design and integrate new features one of which includes PayPal
-> integration which is not working from the tutorial series. 
+> integration which is not working from the tutorial series. I will just leave the download link for the
+> Redis server for future reference https://github.com/tporadowski/redis/releases . 
 
+Command to run celery on windows.
+`celery -A ecommerce.celery worker --pool=solo -l info` 

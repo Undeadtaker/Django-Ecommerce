@@ -118,8 +118,6 @@ LOGIN_URL = '/account/login/'
 # Setup expiry date on email token
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
-
-
 # Setup Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env('EMAIL_HOST')
@@ -130,6 +128,14 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 
+
+# CELERY CONFIGURATION
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Belgrade'
+CELERY_ENABLE_UTC = False
 
 
 

@@ -15,6 +15,7 @@ from store.models import Category, Product
 from .forms import RegistrationForm, UserEditForm, UserAddressForm
 from .models import CustomUser, Address
 from .token import account_activation_token
+from .tasks import celery_send_mail
 
 
 
@@ -39,7 +40,7 @@ def account_register(req):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            user.email_user(subject=subject, message=message)
+            celery_send_mail.delay(user.id, subject, message)
             return HttpResponse('Congratulations. Your Account has been '
                                         'created. Check your email to activate your it.')
     else:

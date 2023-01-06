@@ -176,7 +176,3 @@ def add_to_wishlist(req, id):
         product.users_wishlist.add(req.user)
         messages.success(req, f'Product {product.title} added to wishlist.')
     return HttpResponseRedirect(req.META['HTTP_REFERER'])
-
-
-def user_orders():
-    return None

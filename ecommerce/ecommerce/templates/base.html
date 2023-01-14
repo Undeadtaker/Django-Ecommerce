@@ -10,6 +10,7 @@
     <meta name="author" content="Filip Kasic ">
 
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
     {% block css %}
     <!-- Latest compiled and minified Bootstrap CSS -->
@@ -36,7 +37,7 @@
 
   <body>
 
-    <div class="mb-1">
+    <div class="mb-1" style="margin: 0 !important;">
       <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
           <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +56,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'products:render_all_products' %}">Store</a>
               </li>
+
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   {# URL provided by django-allauth/account/urls.py #}
@@ -78,12 +80,30 @@
               {% endif %}
             </ul>
           </div>
+
+          <a type="button" role="button" href="/"
+                  class="btn btn-outline-secondary border-0 basket-btn" style="font-family: 'Montserrat', sans-serif;">
+
+                  <div id="basket-quantity" class="basket-quantity">
+                      {% if cart.count > 0 %}
+                      {{ cart.count }}
+                      {% else %}
+                      0
+                      {% endif %}
+                  </div>
+                  <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                          class="bi bi-cart3" viewBox="0 0 16 16">
+                          <path
+                              d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                      </svg>
+                  </div>
+                  <span class="fs15 fw500">Basket</span>
+              </a>
         </div>
       </nav>
 
     </div>
-
-    <div class="container">
 
       {% if messages %}
         {% for message in messages %}
@@ -98,7 +118,58 @@
         <p>Use this document as a way to quick start any new project.</p>
       {% endblock content %}
 
-    </div> <!-- /container -->
+    <footer class="container py-5 footer">
+        <hr >
+        <div class="row pt-4">
+            <div class="col-12 col-md">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-asterisk" viewBox="0 0 16 16">
+                    <path
+                        d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z" />
+                </svg>
+                <small class="d-block mb-3 text-muted">&copy; 2017-2021</small>
+            </div>
+            <div class="col-6 col-md fs15">
+                <h5>Features</h5>
+                <ul class="list-unstyled">
+                    <li><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Stuff for developers</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Last time</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md fs15">
+                <h5>Resources</h5>
+                <ul class="list-unstyled">
+                    <li><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md fs15">
+                <h5>Resources</h5>
+                <ul class="list-unstyled">
+                    <li><a class="link-secondary text-decoration-none" href="#">Business</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Education</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Government</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Gaming</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>About</h5>
+                <ul class="list-unstyled">
+                    <li><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
+                    <li><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
 
     {% block modal %}{% endblock modal %}
 

@@ -9,6 +9,7 @@ celery==5.2.7  # pyup: < 6.0  # https://github.com/celery/celery
 django-celery-beat==2.4.0  # https://github.com/celery/django-celery-beat
 flower==1.2.0  # https://github.com/mher/flower
 django-mptt # https://github.com/django-mptt/django-mptt
+dj-shop-cart # https://github.com/Tobi-De/dj-shop-cart
 
 # Django
 # ------------------------------------------------------------------------------

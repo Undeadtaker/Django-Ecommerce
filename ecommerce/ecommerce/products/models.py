@@ -89,3 +89,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_price(self, *arg, **kwargs):
+        return self.regular_price

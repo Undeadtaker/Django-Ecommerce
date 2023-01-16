@@ -92,3 +92,39 @@ class Product(models.Model):
 
     def get_price(self, *arg, **kwargs):
         return self.regular_price
+
+
+# ==================================================================== #
+class ProductImage(models.Model):
+    """
+    The product image table contianing all the product images.
+    """
+    # ................................................................ #
+    product = models.ForeignKey(Product,
+                                on_delete=models.CASCADE,
+                                related_name='product_image')  # The related name is for the template reference.
+    # ................................................................ #
+    image = models.ImageField(verbose_name=_('Image'),
+                              help_text=_('uplaod a product image'),
+                              upload_to='products/images/',
+                              default='products/images/img1.png')
+    # ................................................................ #
+    alt_text = models.CharField(verbose_name=_('Alternative text'),
+                                help_text=_('Please add a alternative text'),
+                                max_length=255,
+                                null=True,
+                                blank=True)
+    # ................................................................ #
+    is_feature = models.BooleanField(default=False)
+    # ................................................................ #
+    created_at = models.DateTimeField(auto_now_add=True)
+    # ................................................................ #
+    updated_at = models.DateTimeField(auto_now = True)
+    # ................................................................ #
+
+    class Meta:
+        verbose_name = _('Product Image')
+        verbose_name_plural = _('Product Images')
+# ==================================================================== #
+
+

@@ -11,45 +11,66 @@
           d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
       </svg>
       Hello there, thank you for visiting my site.
-      <u>Remember, this is only a test site. Do not enter your credit card details here.</u>
+      <u>Remember, this is only a test site.</u>
       If you would like to see more of my work, check here.
 </div>
 
-<div class="container-fluid" style="background-color: #86d0f3;">
-        <div class="row" style="display: flex; align-items: center; justify-content: center; ">
-          <div class="col-lg-6 col-md-6" style="padding-left: 11vw;">
-            <h1 class="h1 fw-bold main-title" style="font-size: 56px;">Search, Read, Buy, Review</h1>
-            <p class="lead text-muted" style="color: #1e1d23 !important; font-family: 'Montserrat', sans-serif; line-height: 25px;">
-                Find a book you like. If it has reviews use them if not read and start making one yourself.
-                Make it short and sweet, but not too short so folks don’t simply skip over it entirely.
-            </p>
-            {% if user.is_authenticated %}
 
-            {% else %}
-            <p>
-              <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg my-5"
-                 style="font-family: 'Montserrat', sans-serif; ">Make an account</a>
-            </p>
-            {% endif %}
-          </div>
-          <div class="col-lg-6">
-            <div class="img-wrapper">
-              <img src="/static/images/background.png" style="width: 90%">
-            </div>
+<div class="filters">
+  <form method="get" action="/" style="position:absolute; width: 15%; display: flex; flex-direction: column; margin-top: 2rem; margin-left: 1rem;">
+    {{ product_filter.form }}
+    <button class="btn btn-sm btn-danger" type="submit" style="margin-top: 2rem;">Apply</button>
+  </form>
+</div>
+
+<div class="container-fluid" style="width: 80%;">
+   {% if not products %}
+        <div class="album py-5 bg-light">
+          <div class="container">
+
+            <h3 style="text-align: center;"> No products available for display, more will be added soon. </h3>
+
           </div>
         </div>
+
+  {% else %}
+
+  <div class="album py-5">
+  <div class="container-fluid" style="max-width: 80%; margin-bottom: 5rem">
+
+    <div class="pb-4 h5">Best rated</div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+
+
+  {% for product in product_filter.qs %}
+
+  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="card shadow-sm rounded h-100 w-100">
+
+      {% for image in product.product_image.all %}
+        {% if image.is_feature %}
+            <img class="rounded" alt="{{ image.image.alt_text }}" src="{{ image.image.url }}" style="min-height: 100px;">
+        {% endif %}
+      {% endfor %}
+
+        <div class="card-body" style="padding-bottom: 0; padding-top: 2rem;">
+        <p class="card-text">
+          <a class="text-dark text-decoration-none" href="{% url 'products:render_single_product' product.slug %}"><b>{{ product.title|truncatewords:8 }}</b></a>
+        </p>
+            </div>
+
+      <div class="card-body"  style= "display: flex; flex-direction:column; justify-content: end; padding-top: 0;">
+          <div class="fw-bold">${{product.regular_price}}</div>
+        <div>
+          <small class="text-muted">9min read</small>
+        </div>
+      </div>
+    </div>
   </div>
 
-
-<div class="container">
-  {% for product in products %}
-  <a href="{% url 'products:render_single_product' product.slug %}" style="text-decoration: none; color: black;">
-    <h1> {{product.title}} </h1>
-    <p> {{product.description}} </p>
-    <p> {{product.price}} </p>
-    <p> {% for category in product.categories.all %} {{category.name}} {% endfor %}</p>
-  </a>
   {% endfor %}
+{% endif %}
+
 </div>
 
 {% endblock content %}

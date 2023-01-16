@@ -9,7 +9,12 @@
      <div class="col-md-5 ps-3 col-lg-5 order-md-last p-0 order-1">
 
        <h1>{{product.title}}</h1>
-        <img src="/static/images/lml-cover.png" style="width: 50%">
+       <p>{{product.description}}</p>
+       {% for image in product.product_image.all %}
+        {% if image.is_feature %}
+            <img class="rounded" alt="{{ image.image.alt_text }}" src="{{ image.image.url }}" style="width: 50%">
+        {% endif %}
+      {% endfor %}
 
      </div>
 

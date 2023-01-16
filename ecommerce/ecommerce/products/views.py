@@ -1,9 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 from dj_shop_cart.cart import get_cart_class
+
 from .models import Product
+from .filters import ProductFilter
 
 
 Cart = get_cart_class()  # get the cart object
@@ -12,7 +15,8 @@ Cart = get_cart_class()  # get the cart object
 # Renders all products page
 def render_all_products(req):
     products = Product.objects.all()
-    context_dict = {'products': products}
+    product_filter = ProductFilter(req.GET, queryset = products)  # filter products
+    context_dict = {'products': products, 'product_filter': product_filter}
     return render(req, 'products/all_products.html', context_dict)
 
 

@@ -5,8 +5,11 @@ from django.utils.translation import gettext_lazy as _
 
 from ecommerce.users.forms import UserAdminChangeForm, UserAdminCreationForm
 
+from .models import Address
+
 User = get_user_model()
 
+admin.site.register(Address)
 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):

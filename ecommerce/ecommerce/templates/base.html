@@ -56,13 +56,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'products:render_all_products' %}">Store</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+              </li>
 
 
 
 <!--              {% if request.user.is_authenticated %}-->
 <!--                <li class="nav-item">-->
 <!--                  {# URL provided by django-allauth/account/urls.py #}-->
-<!--                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% translate "My Profile" %}</a>-->
+<!--                 -->
 <!--                </li>-->
 <!--                <li class="nav-item">-->
 <!--                  {# URL provided by django-allauth/account/urls.py #}-->
@@ -108,8 +111,8 @@
                         <h6 class="card-title">My Account</h6>
                         <ul class="list-group list-group-flush dropdown-account-link nav-links">
                           {% if user.is_authenticated %}
-                            <a href="{% url "home" %}" class="text-reset small list-group-item p-0 pb-1 border-0 dropdown-account-link"><span>Your Account</span></a>
-                          <a href="#" class="text-reset small list-group-item p-0 pb-1 border-0 dropdown-account-link"><span>Orders</span></a>
+                            <a href="{% url "view_account" %}" class="text-reset small list-group-item p-0 pb-1 border-0 dropdown-account-link"><span>Your Account</span></a>
+                          <a href="{% url 'dashboard:dashboard' %}" class="text-reset small list-group-item p-0 pb-1 border-0 dropdown-account-link"><span>Dashboard</span></a>
                             <a href="{% url 'account_logout' %}" class="text-reset small list-group-item p-0 pb-1 border-0 dropdown-account-link"><span>Logout</span></a>
                           {% else %}
                             <a href="{% url "account_login" %}" class="text-reset small list-group-item p-0 pb-1 border-0 dropdown-account-link"><span>Login</span></a>

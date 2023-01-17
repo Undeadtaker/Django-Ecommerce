@@ -24,7 +24,7 @@
 </div>
 
 <div class="container-fluid" style="width: 80%;">
-   {% if not products %}
+   {% if not product_filter.qs %}
         <div class="album py-5 bg-light">
           <div class="container">
 
@@ -42,16 +42,15 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
 
 
+
   {% for product in product_filter.qs %}
 
   <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="card shadow-sm rounded h-100 w-100">
 
-      {% for image in product.product_image.all %}
-        {% if image.is_feature %}
-            <img class="rounded" alt="{{ image.image.alt_text }}" src="{{ image.image.url }}" style="min-height: 100px;">
-        {% endif %}
-      {% endfor %}
+      {% with featured=product.get_feature_image.image %}
+        <img class="rounded" alt="{{ featured.alt_text }}" src="{{ featured.url }}" style="min-height: 100px;">
+      {% endwith %}
 
         <div class="card-body" style="padding-bottom: 0; padding-top: 2rem;">
         <p class="card-text">

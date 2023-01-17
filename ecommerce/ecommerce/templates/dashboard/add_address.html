@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Home {%endblock title%}
+
+{%block content%}
+<div class="container">
+  <div class="login d-flex align-items-center">
+    <div class="col-12 col-md-12 col-lg-12 mx-auto">
+
+      <div class="col-6 mx-auto">
+        <div style="margin-top: 2rem;"></div>
+        <a href="{% url 'dashboard:view_addresses' %}" style="color: black; text-decoration: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+          </svg>
+          Addresses
+        </a>
+        <div style="margin-bottom: 2rem;"></div>
+      <h1 class="h3">Create/Edit Address</h1>
+      <div>Add a new delivery <b>address</b> and delivery preferences</div>
+      <hr />
+      <form name="address_form" class="account-form" method="post" enctype="multipart/form-data">
+        {% if form.errors %}
+        <div class="alert alert-primary" role="alert">
+          Error: Please try again!
+        </div>
+        {% endif %}
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+          {{ form.full_name }}
+          <label class="text-muted medium">Name of address</label>
+        </div>
+        <div class="form-floating mb-3">
+          {{ form.phone }}
+          <label class="text-muted medium">{{ form.phone.label}}</label>
+        </div>
+        <div class="form-floating mb-3">
+          {{ form.town_city }}
+        <label class="text-muted medium">{{ form.town_city.label}}</label>
+        </div>
+        <div class="form-floating mb-3">
+          {{ form.postcode }}
+        <label class="text-muted medium">{{ form.postcode.label}}</label>
+        </div>
+        <div class="form-floating mb-3">
+          {{ form.address_line }}
+          <label class="text-muted medium">{{ form.address_line.label}}</label>
+        </div>
+        <button class="btn btn-primary btn-block py-2 mb-4 mt-4 fw-bold w-100" type="button" value="Submit" onclick="submitForm()">
+        Add Address
+        </button>
+      </form>
+
+    </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function submitForm() {
+   var form = document.getElementsByName('address_form')[0];
+   form.submit(); // Submit the form
+}
+</script>
+
+{% endblock %}

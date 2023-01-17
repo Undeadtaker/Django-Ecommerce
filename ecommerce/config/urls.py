@@ -15,9 +15,9 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path("users/", include("ecommerce.users.urls", namespace="users")),
-    path("accounts/", include("allauth.urls")),
+    path("dashboard/account/", include("ecommerce.account.urls")),
     # Your stuff: custom urls includes go here
+    path("dashboard/", include("ecommerce.dashboard.urls", namespace="dashboard")),
     path("products/", include("ecommerce.products.urls", namespace="products")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -16,8 +16,7 @@ Cart = get_cart_class()  # get the cart object
 def render_all_products(req):
     products = Product.objects.all()
     product_filter = ProductFilter(req.GET, queryset = products)  # filter products
-    context_dict = {'products': products, 'product_filter': product_filter}
-    return render(req, 'products/all_products.html', context_dict)
+    return render(req, 'products/all_products.html', {'product_filter': product_filter})
 
 
 # Renders single product page

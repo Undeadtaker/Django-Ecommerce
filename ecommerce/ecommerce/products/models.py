@@ -93,6 +93,9 @@ class Product(models.Model):
     def get_price(self, *arg, **kwargs):
         return self.regular_price
 
+    def get_feature_image(self):
+        return ProductImage.objects.get(product=self, is_feature=True)
+
 
 # ==================================================================== #
 class ProductImage(models.Model):

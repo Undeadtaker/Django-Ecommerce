@@ -2,11 +2,12 @@ from django.urls import path, re_path
 
 from allauth.account import views
 
-from .views import view_account
+from .views import view_account, change_username
 
 urlpatterns = [
     # custom views for allauth
     path("", view_account, name="view_account"),
+    path("change_username", change_username, name="change_username"),
 
 
     # default views for allauth

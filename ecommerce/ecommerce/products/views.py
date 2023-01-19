@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from dj_shop_cart.cart import get_cart_class
 
-from .models import Product
+from .models import Product, ProductImage
 from .filters import ProductFilter
 
 

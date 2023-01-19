@@ -10,11 +10,8 @@
 
        <h1>{{product.title}}</h1>
        <p>{{product.description}}</p>
-       {% for image in product.product_image.all %}
-        {% if image.is_feature %}
-            <img class="rounded" alt="{{ image.image.alt_text }}" src="{{ image.image.url }}" style="width: 50%">
-        {% endif %}
-      {% endfor %}
+       <img class="rounded" alt="{{ product.alt_text }}" src="{{ product.featured_image.url }}" style="width: 50%">
+
 
      </div>
 
@@ -34,7 +31,7 @@
                     </div>
             </div>
             <hr>
-            <button type="button" id="add-button" value="{{product.id}}" class="btn btn-success fw500">Add to basket</button>
+            <button type="button" id="add-button" value="{{product.id}}" class="btn btn-success fw500">Add to cart</button>
 
            </div>
      </div>
@@ -42,8 +39,6 @@
   </div>
 </div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 
   var button = document.getElementById("add-button");

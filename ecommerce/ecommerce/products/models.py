@@ -81,6 +81,17 @@ class Product(models.Model):
     # ................................................................ #
     updated_at = models.DateTimeField(auto_now = True)
     # ................................................................ #
+    featured_image = models.ImageField(verbose_name=_('Image'),
+                              help_text=_('uplaod a featured image'),
+                              upload_to='products/images/',
+                              default='products/images/img1.png')
+    # ................................................................ #
+    alt_text = models.CharField(verbose_name=_('Alternative text'),
+                                help_text=_('Please add a alternative text'),
+                                max_length=255,
+                                null=True,
+                                blank=True)
+    # ................................................................ #
 
     class Meta:
         ordering = ('-created_at',)
@@ -92,10 +103,6 @@ class Product(models.Model):
 
     def get_price(self, *arg, **kwargs):
         return self.regular_price
-
-    def get_feature_image(self):
-        return ProductImage.objects.get(product=self, is_feature=True)
-
 
 # ==================================================================== #
 class ProductImage(models.Model):
@@ -117,8 +124,6 @@ class ProductImage(models.Model):
                                 max_length=255,
                                 null=True,
                                 blank=True)
-    # ................................................................ #
-    is_feature = models.BooleanField(default=False)
     # ................................................................ #
     created_at = models.DateTimeField(auto_now_add=True)
     # ................................................................ #

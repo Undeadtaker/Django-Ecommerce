@@ -1,18 +1,20 @@
+from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect, reverse
 
 from .forms import AddressForm
 from ecommerce.users.models import Address
+
+from dj_shop_cart.cart import get_cart_class
+Cart = get_cart_class()
 
 
 # Create your views here.
 def dashboard(req):
     return render(req, 'dashboard/dashboard.html')
 
-
-# Account section
-
-
-# Address section
+# ----------------------------------------------------------------
+# ADDRESS SECTION
+# ----------------------------------------------------------------
 def view_addresses(req):
     addresses = Address.objects.filter(user=req.user).order_by('-default')
     return render(req, 'dashboard/view_addresses.html', {'addresses': addresses})
@@ -60,3 +62,24 @@ def set_default_address(req, id):
     #     return redirect('checkout:delivery_address')
 
     return HttpResponseRedirect(reverse('dashboard:view_addresses'))
+
+# ----------------------------------------------------------------
+# CART section
+# ----------------------------------------------------------------
+def view_cart(req):
+    return render(req, 'dashboard/view_cart.html')
+
+
+def cart_delete_item(req):
+    if req.POST.get('action') == 'delete':
+        cart = Cart.new(req)
+        product_id = req.POST.get('product_id')
+        for item in cart:
+            if item.product_pk == product_id:
+                cart.remove(item.id)
+                req.session.modified = True
+        return JsonResponse({'quantity': cart.count, 'subtotal': cart.total, 'removed_item_id': product_id})
+
+
+def cart_update_item():
+    return None

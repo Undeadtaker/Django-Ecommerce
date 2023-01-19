@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block title%} Basket summary {%endblock title%}
+
+{% block content %}
+<main class="pt-5">
+  <div class="container" style="max-width: 1000px">
+    <div class="col-12">
+      <h1 class="h2">Your Basket</h1>
+    </div>
+    <div class="col-12">
+      <p>Manage your <b>items</b> in your basket</p>
+    </div>
+    <hr />
+  </div>
+  <div class="container" id = "main_container" style="max-width: 1000px">
+
+    {% if not cart %}
+
+    <h3> You have no items in your cart </h3>
+
+    {% else %}
+    <div class="row g-3" id="main">
+      <div class="col-12 bg-light p-3 d-flex justify-content-between">
+        <div class="d-flex d-flex-inline">
+          <div class="pe-3">Order</div>
+        </div>
+        <div class="text-end">
+
+          <div class="">Sub Total (before shipment): <span class="fw-bold">$</span><div id="subtotal" class="d-inline-flex fw-bold">{{cart.total}}</div></div>
+
+        </div>
+      </div>
+      <div class="col-md-5 col-lg-4 order-md-last p-0 order-3">
+        <div class="d-grid gap-2 ">
+          <a role="button" href="/" class="btn btn-success fw-bold" type="button">Checkout Securely</a>
+        </div>
+      </div>
+      <div class="col-md-7 col-lg-8 p-0">
+
+        {% for item in cart %}
+        {% with product=item.product %}
+
+        <div class="card mb-3 border-0 product-item" id="{{product.id}}">
+          <div class="row g-0">
+            <div class="col-md-4 d-none d-md-block">
+              <div class="bg-light">
+                <img class="img-fluid d-block" alt="{{ product.alt_text }}" src="{{ product.featured_image.url }}">
+              </div>
+              </div>
+            <div class="col-md-8 ps-md-3">
+              <div class="card-body p-1">
+                <a class="text-decoration-none text-reset" href="{% url 'products:render_single_product' product.slug %}">
+                  <h3 class="card-text pb-3">{{product.title}}</h3>
+                </a>
+                    <label for="select">Quantity</label>
+                    <select id="select{{product.id}}" class="form-select-sm">
+                      <option value="" selected disabled hidden>{{item.quantity}}</option>
+                      <option value="">1</option>
+                      <option value="">2</option>
+                      <option value="">3</option>
+                      <option value="">4</option>
+                    </select>
+                <a type="button" id="update-button" data-index="{{product.id}}"
+                   class="update-button text-decoration-none medium ps-3">Update</a>
+                <a type="button" id="delete-button" data-index="{{product.id}}"
+                   class="delete-button text-decoration-none medium">Delete</a>
+              </div>
+              <div class="card-body p-1">
+                <p class="fs-5 align-items-end" style="position:absolute; bottom: 0; margin: 0;">Price per unit: ${{product.regular_price}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        {% endwith %}
+        {% endfor %}
+
+      {% endif %}
+      </div>
+    </div>
+
+  </div>
+</main>
+
+
+<script>
+
+  if(document.getElementById("delete-button") === null) {console.log('button not found');}
+  else
+  {
+    var button = document.getElementById("delete-button");
+    button.onclick = function(e) {
+      e.preventDefault();
+      var product_id = button.dataset.index;
+      console.log(product_id)
+
+      let data = new FormData();
+      data.append("product_id", product_id)
+      data.append("action", "delete")
+      data.append("csrfmiddlewaretoken", '{{csrf_token}}')
+
+      axios.post('{% url 'dashboard:cart_delete_item' %}', data)
+      .then(function (response) {
+        document.getElementById("basket-quantity").innerHTML = response.data['quantity'];
+        document.getElementById("subtotal").innerHTML = response.data['subtotal'];
+        document.getElementById(response.data['removed_item_id']).remove();
+
+        if(response.data['quantity'] == 0)
+        {
+            document.getElementById("main").remove();
+            let title = document.createElement('h3');
+            title.innerHTML = "You have no items in your cart";
+            document.getElementById("main_container").appendChild(title);
+        }
+
+      })
+      .catch(function (error) {
+       console.log(error);
+      });
+    };
+  }
+</script>
+
+
+
+
+{% endblock content %}
+

@@ -1,6 +1,3 @@
-# Django Ecommerce Web App
-### Live demo https://www.starshop-demo.online
-
 ![alt text](https://i.imgur.com/k80Eks9.png) 
 ## Features
 
